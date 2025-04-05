@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Women's Rights Activist Association - Albany</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f7f7f7;
+      color: #333;
+    }
+    header {
+      background: linear-gradient(135deg, #FF6B6B, #FFD93D);
+      padding: 20px 0;
+      text-align: center;
+      color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      letter-spacing: 1px;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin: 20px auto;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .tab {
+      flex: 1;
+      padding: 14px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: 600;
+      color: #555;
+    }
+    .tab:hover {
+      background-color: #f1f1f1;
+    }
+    .tab.active {
+      background-color: #FF6B6B;
+      color: #fff;
+    }
+    .tab-content {
+      display: none;
+      padding: 20px;
+      width: 90%;
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .user {
+      border: 1px solid #e0e0e0;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 8px;
+      background-color: #fff;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .user:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .user h3 {
+      margin-top: 0;
+      color: #FF6B6B;
+    }
+    .tags {
+      margin-top: 10px;
+    }
+    .tag {
+      display: inline-block;
+      background-color: #4964ff;
+      padding: 4px 8px;
+      margin: 0 5px 5px 0;
+      border-radius: 20px;
+      font-size: 0.9em;
+      color: #fff;
+    }
+    #search {
+      display: block;
+      margin: 20px auto;
+      padding: 10px;
+      width: 90%;
+      max-width: 500px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      outline: none;
+      font-size: 1em;
+      transition: border-color 0.3s;
+    }
+    #search:focus {
+      border-color: #FF6B6B;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #fff;
+      border-top: 1px solid #e0e0e0;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Women's Rights Activist Center</h1>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="home">Home</div>
+    <div class="tab" data-tab="activists">Activists</div>
+    <div class="tab" data-tab="about">About</div>
+  </div>
+
+  <div id="home" class="tab-content active">
+    <h2>Welcome to the Albany Women's Rights Activist Center</h2>
+    <p>
+      We are a newly founded organization based in Albany, dedicated to championing women's rights and fostering a community of passionate activists. Our mission is to empower women through advocacy, education, and grassroots initiatives. Whether you're an established leader or just beginning your journey in activism, all are welcome here. Explore the Activists tab to connect with trailblazing individuals and learn more about the vibrant initiatives making a difference in our community.
+    </p>
+    <h3>Our Vision & Values</h3>
+    <p>
+      At the Albany Women's Rights Activist Center, we believe in the transformative power of unity, determination, and compassion. Our core values of equality, inclusion, and justice drive us to create a space where every voice matters. We are committed to nurturing leaders and inspiring change at the grassroots level.
+    </p>
+    <h3>Recent Initiatives & Events</h3>
+    <p>
+      Over the past few months, we have launched a series of community outreach programs, held interactive workshops, and hosted panel discussions with influential activists. Our events aim to educate, empower, and mobilize the community for lasting change.
+    </p>
+    <h3>Join the Conversation</h3>
+    <p>
+      Stay updated with our latest news, events, and success stories. Follow us on social media and subscribe to our newsletter to be part of a growing movement that is reshaping the future of women's rights in Albany. Together, we can drive change and create a more equitable society.
+    </p>
+    <p>
+      For inquiries or further information, feel free to reach out to us at <a href="mailto:wralbany@womensrightsalbany.org">wralbany@womensrightsalbany.org</a>. Your journey towards empowerment begins here!
+    </p>
+  </div>
+
+  <div id="activists" class="tab-content">
+    <h2>Activists</h2>
+    <input type="text" id="search" placeholder="Search activists by name or tag...">
+    <div id="userList"></div>
+  </div>
+
+  <div id="about" class="tab-content">
+    <h2>About</h2>
+    <p>This webpage is built to highlight inspiring individuals and organizations in the fight for women's rights. Use the tabs above to explore different sections and the search tool to quickly find activists by name or area of focus.</p>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Women's Rights Activist Hub</p>
+  </footer>
+
+  <script>
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs and contents
+        tabs.forEach(t => t.classList.remove('active'));
+        contents.forEach(c => c.classList.remove('active'));
+
+        // Add active class to the clicked tab and corresponding content
+        tab.classList.add('active');
+        document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
+      });
+    });
+
+    // Sample activist user data
+    const users = [
+    { name: 'Alice Johnson', tags: ['Equality', 'Education ✅', 'Mental Health', 'Book Club'] },
+    { name: 'Maria Gonzalez', tags: ['Healthcare', 'Community', 'Support', 'Fundraiser Expert'] },
+    { name: 'Fatima Ali', tags: ['Leadership ✅', 'Activism', 'Growth', 'Digital Rights', 'Policy Reform'] },
+    { name: 'Emily Davis', tags: ['Environment', 'Sustainability ✅', 'Green Initiatives', '100+ Trees Planted'] },
+    { name: 'Sara Ahmed', tags: ['Rights', 'Justice ✅', 'Social Impact', 'Global Perspective'] },
+    { name: 'Grace Thompson', tags: ['Empowerment', 'Community ✅', 'Solidarity', 'Youth Mentor'] },
+    { name: 'Zara Patel', tags: ['Innovation ✅', 'Advocacy', 'Tech Ethics', 'Data Privacy'] },
+    { name: 'Linda Smith', tags: ['Equality', 'Activism ✅', 'Awareness', 'Cultural Heritage'] },
+    { name: 'Karen Lee', tags: ['Education ✅', 'Inspiration', 'Mentorship', 'STEM Advocate'] },
+    { name: 'Patricia Brown', tags: ['Healthcare', 'Rights ✅', 'Support', 'Rural Access'] },
+    { name: 'Jessica Wilson', tags: ['Community', 'Empowerment ✅', 'Unity', 'Volunteer 500+ Hours'] },
+    { name: 'Elizabeth Taylor', tags: ['Equality', 'Justice', 'Civil Rights ✅', 'Legislative Reform'] },
+    { name: 'Hannah Moore', tags: ['Activism', 'Sustainability', 'Eco-Friendly ✅', 'Zero Waste'] },
+    { name: 'Megan Clark', tags: ['Leadership', 'Education', 'Collaboration ✅', 'Public Speaking'] },
+    { name: 'Sophia Turner', tags: ['Advocacy ✅', 'Empowerment', 'Change', 'Crisis Response'] },
+    { name: 'Olivia Harris', tags: ['Environment', 'Innovation ✅', 'Future-Ready', 'Green Tech'] },
+    { name: 'Isabella Martinez', tags: ['Community', 'Rights', 'Inclusive ✅', 'Language Justice'] },
+    { name: 'Mia Robinson', tags: ['Justice', 'Inspiration ✅', 'Awareness', 'Media Literacy'] },
+    { name: 'Abigail Walker', tags: ['Equality ✅', 'Activism', 'Solidarity', 'Voter Outreach'] },
+    { name: 'Chloe White', tags: ['Education', 'Advocacy ✅', 'Inclusion', 'Curriculum Design'] },
+    { name: 'Mohammed (Mo) Tijani', tags: ['Ally ', 'Top 5% Supporter ✅', 'Womens Rights', 'Justice for all', '50 Events Attended ✅', 'WRA Attendee ✅'] },
+    { name: 'Liam Baker', tags: ['Justice', 'Human Rights ✅', 'Equality', 'Legal Aid'] },
+    { name: 'Sophia Brooks', tags: ['Empowerment ✅', 'Community Engagement', 'Neighborhood Watch'] },
+    { name: 'Ethan Ross', tags: ['Education', 'Leadership ✅', 'Growth', 'Financial Literacy'] },
+    { name: 'Mason Wright', tags: ['Innovation', 'Sustainability', 'Green Tech ✅', 'Renewable Energy'] },
+    { name: 'Avery Walker', tags: ['Advocacy', 'Support ✅', 'Community', 'Crisis Management'] },
+    { name: 'Ella Scott', tags: ['Healthcare ✅', 'Inspiration', 'Wellness', 'Mental Health'] },
+    { name: 'Logan Diaz', tags: ['Community', 'Justice ✅', 'Action', 'Neighborhood Safety'] },
+    { name: 'Lucas Price', tags: ['Education', 'Youth Leadership ✅', 'Development', 'Mentorship'] },
+    { name: 'Charlotte Lee', tags: ['Rights ✅', 'Advocacy', 'Freedom', 'Policy Expert'] },
+    { name: 'Mila Parker', tags: ['Equality', 'Social Change ✅', 'Justice', 'Intersectionality'] },
+    { name: 'Harper King', tags: ['Community ✅', 'Empowerment', 'Solidarity', 'Event Organizer'] },
+    { name: 'Riley Reed', tags: ['Healthcare', 'Support ✅', 'Mental Health', 'Peer Counseling'] },
+    { name: 'Ellie Cooper', tags: ['Leadership', 'Education ✅', 'Guidance', 'Youth Programs'] },
+    { name: 'Nora Hayes', tags: ['Innovation', 'Future-Ready ✅', 'Technology', 'Digital Access'] },
+    { name: 'Audrey West', tags: ['Activism ✅', 'Empowerment', 'Change', 'Direct Action'] },
+    { name: 'Vivian Chapman', tags: ['Community', 'Innovation ✅', 'Growth', 'Urban Planning'] },
+    { name: 'Harper Day', tags: ['Equality ✅', 'Leadership', 'Respect', 'Conflict Resolution'] },
+    { name: 'Eliana Armstrong', tags: ['Education', 'Advocacy', 'Mentorship ✅', 'After-School Programs'] },
+    { name: 'Gianna Snyder', tags: ['Healthcare', 'Empowerment ✅', 'Resilience', 'Trauma Support'] },
+    { name: 'Penelope Kim', tags: ['Rights', 'Activism ✅', 'Unity', 'Cultural Awareness'] },
+    { name: 'Lila Romero', tags: ['Innovation', 'Justice', 'Equity ✅', 'Restorative Practices'] },
+    { name: 'Aria Hamilton', tags: ['Education', 'Justice ✅', 'Support', 'Scholarship Access'] },
+    { name: 'Layla Graham', tags: ['Equality', 'Activism', 'Collaboration ✅', 'Coalition Building'] },
+    { name: 'Mila Sullivan', tags: ['Community', 'Advocacy ✅', 'Engagement', 'Civic Participation'] },
+    { name: 'Camila Wallace', tags: ['Leadership ✅', 'Innovation', 'Progress', 'Systems Change'] },
+    { name: 'Ruby Woods', tags: ['Education', 'Equality ✅', 'Fairness', 'Academic Support'] },
+    { name: 'Clara Cole', tags: ['Advocacy', 'Justice', 'Rights ✅', 'Legal Education'] },
+    { name: 'Stella Myers', tags: ['Activism', 'Innovation ✅', 'Change', 'Digital Organizing'] },
+    { name: 'Zach Barocas', tags: ['Ally', 'Empowerment ✅', 'Mental Health', '1000+ Trees planted✅', 'Top 3% in the Region ✅'] }
+
+  ];
+    // Function to display user cards with optional search filter
+    function displayUsers(filter = '') {
+      const userList = document.getElementById('userList');
+      userList.innerHTML = ''; // Clear current list
+
+      const lowerFilter = filter.toLowerCase();
+      const filteredUsers = users.filter(user =>
+        user.name.toLowerCase().includes(lowerFilter) ||
+        user.tags.some(tag => tag.toLowerCase().includes(lowerFilter))
+      );
+
+      if (filteredUsers.length === 0) {
+        userList.innerHTML = '<p>No activists found.</p>';
+        return;
+      }
+
+      filteredUsers.forEach(user => {
+        const userDiv = document.createElement('div');
+        userDiv.className = 'user';
+
+        const nameEl = document.createElement('h3');
+        nameEl.textContent = user.name;
+
+        const tagsEl = document.createElement('div');
+        tagsEl.className = 'tags';
+        user.tags.forEach(tag => {
+          const tagSpan = document.createElement('span');
+          tagSpan.className = 'tag';
+          tagSpan.textContent = tag;
+          tagsEl.appendChild(tagSpan);
+        });
+
+        userDiv.appendChild(nameEl);
+        userDiv.appendChild(tagsEl);
+        userList.appendChild(userDiv);
+      });
+    }
+
+    // Initial display of all users
+    displayUsers();
+
+    // Attach event listener for the search input to filter activists
+    document.getElementById('search').addEventListener('input', (e) => {
+      displayUsers(e.target.value);
+    });
+  </script>
+</body>
+</html>
